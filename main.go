@@ -8,9 +8,9 @@ import (
 
 type album struct {
 	ID     int    `json:"id"`
-	Title  string `json:"title"`
-	Artist string `json:"artist"`
-	Year   int    `json:"year"`
+	Title  string `json:"title" binding:"required"`
+	Artist string `json:"artist" binding:"required"`
+	Year   int    `json:"year" binding:"required"`
 }
 
 var albums = []album{
@@ -20,12 +20,17 @@ var albums = []album{
 }
 
 func main() {
-	router := gin.Default()
-	router.GET("/albums", getAlbums)
+	r := gin.Default()
+	r.GET("/albums", getAlbums)
+	r.POST("/albums", addAlbum)
 
-	router.Run("localhost:8080")
+	r.Run("localhost:8080")
 }
 
 func getAlbums(c *gin.Context) {
 	c.IndentedJSON(http.StatusOK, albums)
+}
+
+func addAlbum(c *gin.Context) {
+	c.String(http.StatusOK, "add new album")
 }

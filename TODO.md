@@ -1,0 +1,2 @@
+- [ ] POST /albums
+- [ ] GET /albums/:id
