@@ -1,0 +1,16 @@
+@URL=http://localhost:8080
+
+### GET /albums
+
+GET {{URL}}/albums
+
+
+### POST /albums
+POST {{URL}}/albums
+Content-Type: application/json
+
+{
+  "artist": "Goodbye June",
+  "title": "Oh No",
+  "year": 2016
+}
