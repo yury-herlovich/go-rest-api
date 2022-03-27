@@ -1,16 +1,16 @@
-@URL=http://localhost:8080
+@URL = http://localhost:8080
 
-### GET /albums
+###
 
-GET {{URL}}/albums
+GET {{URL}}/albums HTTP/1.1
 
+###
 
-### POST /albums
-POST {{URL}}/albums
+POST {{URL}}/albums HTTP/1.1
 Content-Type: application/json
 
-{
-  "artist": "Goodbye June",
-  "title": "Oh No",
-  "year": 2016
-}
+{ "title": "Oh No", "artist": "Goodbye June", "year": 2016 }
+
+###
+
+GET {{URL}}/albums/1

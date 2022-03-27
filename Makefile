@@ -1,2 +1,2 @@
 watch:
-	reflex -r '\.go' -s --decoration=none -- sh -c "go run main.go"
+	reflex -r '\.go' -s --decoration=none -- sh -c "go run src/main.go"
