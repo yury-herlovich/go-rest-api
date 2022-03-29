@@ -47,7 +47,7 @@ func AddAlbum(c *gin.Context) {
 }
 
 func GetAlbum(c *gin.Context) {
-	id, err := strconv.Atoi(c.Param("id"))
+	id, err := getIdFromParams(c)
 
 	if err != nil {
 		c.IndentedJSON(http.StatusBadRequest, errors.ErrorResponse{ErrorMessage: "wrong id"})
@@ -62,4 +62,30 @@ func GetAlbum(c *gin.Context) {
 	}
 
 	c.IndentedJSON(http.StatusNotFound, errors.ErrorResponse{ErrorMessage: "album not found"})
+}
+
+func DeleteAlbum(c *gin.Context) {
+	id, err := getIdFromParams(c)
+
+	if err != nil {
+		c.IndentedJSON(http.StatusBadRequest, errors.ErrorResponse{ErrorMessage: "wrong id"})
+		return
+	}
+
+	for ind, a := range albums {
+		if a.ID != id {
+			continue
+		}
+
+		albums = append(albums[:ind], albums[ind+1:]...)
+		c.IndentedJSON(http.StatusOK, a)
+		return
+	}
+
+	c.IndentedJSON(http.StatusNotFound, errors.ErrorResponse{ErrorMessage: "album not found"})
+
+}
+
+func getIdFromParams(c *gin.Context) (int, error) {
+	return strconv.Atoi(c.Param("id"))
 }

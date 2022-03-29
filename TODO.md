@@ -1,2 +1,8 @@
-- [ ] POST /albums
-- [ ] GET /albums/:id
+- [x] POST /albums
+- [x] GET /albums/:id
+- [x] DELETE /albums/:id
+- [ ] PATCH
+- [ ] PUT
+- [ ] health-check
+- [ ] postgres
+- [ ] rabbit

@@ -14,3 +14,7 @@ Content-Type: application/json
 ###
 
 GET {{URL}}/albums/1
+
+###
+
+DELETE {{URL}}/albums/1

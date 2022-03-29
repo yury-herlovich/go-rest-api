@@ -10,6 +10,7 @@ func main() {
 	r.GET("/albums", albums.GetAlbums)
 	r.POST("/albums", albums.AddAlbum)
 	r.GET("/albums/:id", albums.GetAlbum)
+	r.DELETE("/albums/:id", albums.DeleteAlbum)
 
 	r.Run("localhost:8080")
 }
