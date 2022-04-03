@@ -12,5 +12,5 @@ func main() {
 	r.GET("/albums/:id", albums.GetAlbum)
 	r.DELETE("/albums/:id", albums.DeleteAlbum)
 
-	r.Run("localhost:8080")
+	r.Run(":8080")
 }

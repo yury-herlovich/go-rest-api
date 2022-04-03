@@ -4,5 +4,6 @@
 - [ ] PATCH
 - [ ] PUT
 - [ ] health-check
+- [x] dockerize
 - [ ] postgres
 - [ ] rabbit
