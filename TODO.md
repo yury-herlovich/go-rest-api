@@ -5,6 +5,6 @@
 - [ ] PUT
 - [ ] health-check
 - [x] dockerize
-- [ ] use not admin user in docker
+- [x] use not admin user in docker
 - [ ] postgres
 - [ ] rabbit
