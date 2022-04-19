@@ -8,4 +8,5 @@
 - [x] use not admin user in docker
 - [ ] postgres
 - [ ] env variables
+- [ ] DB migrations
 - [ ] rabbit

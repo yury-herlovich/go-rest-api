@@ -8,14 +8,16 @@ import (
 )
 
 func main() {
-	db.Init()
+	database := db.Init()
 	defer db.Close()
 
+	albumsCtrl := albums.AlbumsController{Database: database}
+
 	r := gin.Default()
-	r.GET("/albums", albums.GetAlbums)
-	r.POST("/albums", albums.AddAlbum)
-	r.GET("/albums/:id", albums.GetAlbum)
-	r.DELETE("/albums/:id", albums.DeleteAlbum)
+	r.GET("/albums", albumsCtrl.GetAlbums)
+	r.POST("/albums", albumsCtrl.AddAlbum)
+	// r.GET("/albums/:id", albumsCtrl.GetAlbum)
+	// r.DELETE("/albums/:id", albumsCtrl.DeleteAlbum)
 
 	r.Run(":8080")
 }
