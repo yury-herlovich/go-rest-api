@@ -16,8 +16,8 @@ func main() {
 	r := gin.Default()
 	r.GET("/albums", albumsCtrl.GetAlbums)
 	r.POST("/albums", albumsCtrl.AddAlbum)
-	// r.GET("/albums/:id", albumsCtrl.GetAlbum)
-	// r.DELETE("/albums/:id", albumsCtrl.DeleteAlbum)
+	r.GET("/albums/:id", albumsCtrl.GetAlbum)
+	r.DELETE("/albums/:id", albumsCtrl.DeleteAlbum)
 
 	r.Run(":8080")
 }

@@ -5,6 +5,7 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+	"github.com/google/uuid"
 	"github.com/yury-herlovich/go-rest-api/src/errors"
 )
 
@@ -50,15 +51,12 @@ func (c *AlbumsController) AddAlbum(ctx *gin.Context) {
 	}
 
 	err := c.Database.QueryRow(
-		"INSERT INTO albums (title, artist, year) values ($1, $2, $3) RETURNING id, title, artist, year",
+		"INSERT INTO albums (title, artist, year) values ($1, $2, $3) RETURNING id, title, artist, year;",
 		newAlbum.Title,
 		newAlbum.Artist,
 		newAlbum.Year,
 	).Scan(
-		&newAlbum.ID,
-		&newAlbum.Title,
-		&newAlbum.Artist,
-		&newAlbum.Year,
+		&newAlbum.ID, &newAlbum.Title, &newAlbum.Artist, &newAlbum.Year,
 	)
 
 	if err != nil {
@@ -69,46 +67,57 @@ func (c *AlbumsController) AddAlbum(ctx *gin.Context) {
 	ctx.IndentedJSON(http.StatusCreated, newAlbum)
 }
 
-// func (c *AlbumsController) GetAlbum(ctx *gin.Context) {
-// 	id, err := getIdFromParams(ctx)
+func (c *AlbumsController) GetAlbum(ctx *gin.Context) {
+	id, err := uuid.Parse(ctx.Param("id"))
 
-// 	if err != nil {
-// 		ctx.IndentedJSON(http.StatusBadRequest, errors.ErrorResponse{ErrorMessage: "wrong id"})
-// 		return
-// 	}
+	if err != nil {
+		ctx.IndentedJSON(http.StatusBadRequest, errors.ErrorResponse{ErrorMessage: "wrong id"})
+		return
+	}
 
-// 	for _, a := range albums {
-// 		if a.ID == id {
-// 			ctx.IndentedJSON(http.StatusOK, a)
-// 			return
-// 		}
-// 	}
+	var album Album
+	err = c.Database.QueryRow(
+		"SELECT id, title, artist, year FROM albums WHERE id = $1;", id,
+	).Scan(
+		&album.ID, &album.Title, &album.Artist, &album.Year,
+	)
 
-// 	ctx.IndentedJSON(http.StatusNotFound, errors.ErrorResponse{ErrorMessage: "album not found"})
-// }
+	if err != nil {
+		switch err {
+		case sql.ErrNoRows:
+			ctx.IndentedJSON(http.StatusNotFound, errors.ErrorResponse{ErrorMessage: "album not found"})
+		default:
+			ctx.AbortWithStatusJSON(http.StatusInternalServerError, "An error occured")
+		}
 
-// func (c *AlbumsController) DeleteAlbum(ctx *gin.Context) {
-// 	id, err := getIdFromParams(ctx)
+		return
+	}
 
-// 	if err != nil {
-// 		ctx.IndentedJSON(http.StatusBadRequest, errors.ErrorResponse{ErrorMessage: "wrong id"})
-// 		return
-// 	}
+	ctx.IndentedJSON(http.StatusOK, album)
+}
 
-// 	for ind, a := range albums {
-// 		if a.ID != id {
-// 			continue
-// 		}
+func (c *AlbumsController) DeleteAlbum(ctx *gin.Context) {
+	id, err := uuid.Parse(ctx.Param("id"))
 
-// 		albums = append(albums[:ind], albums[ind+1:]...)
-// 		ctx.IndentedJSON(http.StatusOK, a)
-// 		return
-// 	}
+	if err != nil {
+		ctx.IndentedJSON(http.StatusBadRequest, errors.ErrorResponse{ErrorMessage: "wrong id"})
+		return
+	}
 
-// 	ctx.IndentedJSON(http.StatusNotFound, errors.ErrorResponse{ErrorMessage: "album not found"})
+	res, err := c.Database.Exec("DELETE FROM albums WHERE id = $1;", id)
 
-// }
+	if err != nil {
+		ctx.AbortWithStatusJSON(http.StatusInternalServerError, "An error occured")
+		return
+	}
 
-// func getIdFromParams(ctx *gin.Context) (int, error) {
-// 	return strconv.Atoi(ctx.Param("id"))
-// }
+	count, err := res.RowsAffected()
+
+	if count == 0 {
+		ctx.IndentedJSON(http.StatusNotFound, errors.ErrorResponse{ErrorMessage: "album not found"})
+		return
+	}
+
+	ctx.IndentedJSON(http.StatusNoContent, nil)
+
+}

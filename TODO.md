@@ -1,3 +1,4 @@
+- [x] GET /albums
 - [x] POST /albums
 - [x] GET /albums/:id
 - [x] DELETE /albums/:id
