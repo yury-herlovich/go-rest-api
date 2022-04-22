@@ -2,19 +2,26 @@
 
 ###
 
-GET {{URL}}/albums HTTP/1.1
+GET {{URL}}/albums
 
 ###
 
-POST {{URL}}/albums HTTP/1.1
+POST {{URL}}/albums
 Content-Type: application/json
 
 { "title": "Oh No", "artist": "Goodbye June", "year": 2016 }
 
 ###
 
-GET {{URL}}/albums/1
+GET {{URL}}/albums/a18d6479-a7cd-4eba-944c-f456009a0311
 
 ###
 
-DELETE {{URL}}/albums/1
+PATCH {{URL}}/albums/a18d6479-a7cd-4eba-944c-f456009a0311
+Content-Type: application/json
+
+{ "artist": "Goodbye June", "year": 2016 }
+
+###
+
+DELETE {{URL}}/albums/a18d6479-a7cd-4eba-944c-f456009a0311

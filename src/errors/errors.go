@@ -2,6 +2,7 @@ package errors
 
 import (
 	"errors"
+	"strings"
 
 	"github.com/go-playground/validator/v10"
 )
@@ -41,4 +42,18 @@ func ParseValidationErrors(err error) ErrorResponse {
 	}
 
 	return ErrorResponse{ErrorMessage: "unknown error"}
+}
+
+func FilterNonRequiredErrors(errResponse ErrorResponse) ErrorResponse {
+	var errors []ErrorMsg
+
+	for ind, e := range errResponse.Errors {
+		if !strings.Contains(e.Message, "required") {
+			errors = append(errors, errResponse.Errors[ind])
+		}
+	}
+
+	errResponse.Errors = errors
+
+	return errResponse
 }

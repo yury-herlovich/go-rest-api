@@ -2,12 +2,12 @@
 - [x] POST /albums
 - [x] GET /albums/:id
 - [x] DELETE /albums/:id
-- [ ] PATCH
+- [x] PATCH
 - [ ] PUT
 - [ ] health-check
 - [x] dockerize
 - [x] use not admin user in docker
-- [ ] postgres
+- [x] postgres
 - [ ] env variables
 - [ ] DB migrations
 - [ ] rabbit

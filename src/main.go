@@ -17,6 +17,7 @@ func main() {
 	r.GET("/albums", albumsCtrl.GetAlbums)
 	r.POST("/albums", albumsCtrl.AddAlbum)
 	r.GET("/albums/:id", albumsCtrl.GetAlbum)
+	r.PATCH("/albums/:id", albumsCtrl.UpdateAlbum)
 	r.DELETE("/albums/:id", albumsCtrl.DeleteAlbum)
 
 	r.Run(":8080")
