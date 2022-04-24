@@ -25,3 +25,7 @@ Content-Type: application/json
 ###
 
 DELETE {{URL}}/albums/a18d6479-a7cd-4eba-944c-f456009a0311
+
+###
+
+GET {{URL}}/health-check

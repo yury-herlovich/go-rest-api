@@ -4,7 +4,7 @@
 - [x] DELETE /albums/:id
 - [x] PATCH
 - [ ] PUT
-- [ ] health-check
+- [x] health-check
 - [x] dockerize
 - [x] use not admin user in docker
 - [x] postgres
