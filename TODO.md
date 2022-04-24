@@ -8,6 +8,6 @@
 - [x] dockerize
 - [x] use not admin user in docker
 - [x] postgres
-- [ ] env variables
+- [x] env variables
 - [ ] DB migrations
 - [ ] rabbit
