@@ -9,6 +9,7 @@ RUN go mod download -x
 FROM base as dev
 WORKDIR /usr/src
 RUN go install github.com/cespare/reflex@latest
+RUN go install github.com/go-delve/delve/cmd/dlv@latest
 COPY --from=base /go/pkg/mod /go/pkg/mod
 
 ###   release   ###

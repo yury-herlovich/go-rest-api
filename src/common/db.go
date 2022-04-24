@@ -1,18 +1,12 @@
 package db
 
 import (
+	"os"
+
 	_ "github.com/lib/pq"
 
 	"database/sql"
 	"fmt"
-)
-
-const (
-	host     = "db"
-	port     = 5432
-	user     = "postgres"
-	password = "postgres"
-	dbname   = "gorestdb"
 )
 
 type Database struct {
@@ -22,6 +16,12 @@ type Database struct {
 var DB *sql.DB
 
 func Init() *sql.DB {
+	host := os.Getenv("DB_HOST")
+	port := 5432
+	user := os.Getenv("DB_USER")
+	password := os.Getenv("DB_PASS")
+	dbname := os.Getenv("DB_NAME")
+
 	dsn := fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s sslmode=disable",
 		host, port, user, password, dbname,
 	)
